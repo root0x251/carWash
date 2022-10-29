@@ -24,11 +24,15 @@ public class Booking {
     @Column(name = "b_date")
     private String date;
 
+    @Column(name = "is_done")
+    private boolean isDone;
+
     public Booking() {
     }
 
-    public Booking(String time, String date) {
+    public Booking(String time, String date, boolean isDone) {
         this.time = time;
         this.date = date;
+        this.isDone = isDone;
     }
 }

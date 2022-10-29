@@ -11,7 +11,6 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query(value = "SELECT b_time FROM public.booking WHERE b_date = ?1", nativeQuery = true)
-    List<String> findAllTime(String date);
-
+    List<String> findNotBookingDate(String date);
 
 }

@@ -31,20 +31,9 @@ public class UserController {
         List<String> bookedNextDay;       // +2 day
 
         // this is booking days
-        bookedCurrentDay = bookingRepository.findAllTime(generateDays("dd.MM", 0));
-        for (String s : bookedCurrentDay) {
-            System.out.println(generateDays("dd.MM", 0) + " = " + s);
-        }
-
-        bookedTomorrow = bookingRepository.findAllTime(generateDays("dd.MM", 1));
-        for (String s : bookedTomorrow) {
-            System.out.println(generateDays("dd.MM", 1) + " = " + s);
-        }
-
-        bookedNextDay = bookingRepository.findAllTime(generateDays("dd.MM", 2));
-        for (String s : bookedNextDay) {
-            System.out.println(generateDays("dd.MM", 2) + " = " + s);
-        }
+        bookedCurrentDay = bookingRepository.findNotBookingDate(generateDays("dd.MM", 0));
+        bookedTomorrow = bookingRepository.findNotBookingDate(generateDays("dd.MM", 1));
+        bookedNextDay = bookingRepository.findNotBookingDate(generateDays("dd.MM", 2));
 
         // generate time
         List<String> listWithTimeToday = generateTime();
@@ -55,7 +44,7 @@ public class UserController {
         listWithTimeTomorrow.removeAll(new HashSet<>(bookedTomorrow));
         listWithTimeNextDayAfterTomorrow.removeAll(new HashSet<>(bookedNextDay));
 
-        // days example SUN 26.10
+        // days (example SUN 26.10)
         String dayToday = generateDays("EEE dd.MM", 0);
         String dayTomorrow = generateDays("EEE dd.MM", 1);
         String dayAfterTomorrow = generateDays("EEE dd.MM", 2);
@@ -75,14 +64,16 @@ public class UserController {
         return "index";
     }
 
-    @PostMapping
+    @PostMapping("/")
     public String sendInfo(@RequestParam("name") String name,
-                           @RequestParam("number") String number,
+                           @RequestParam("phone") String phone,
+                           @RequestParam("mail") String mail,
+                           @RequestParam("carNumber") String carNumber,
                            @RequestParam("time") String time) {
 
         String[] editingDate = time.split(" ")[1].split("T");
-        UserInfo userInfo = new UserInfo(name, number);
-        Booking booking = new Booking(editingDate[1], editingDate[0]);
+        UserInfo userInfo = new UserInfo(name, phone, mail, carNumber);
+        Booking booking = new Booking(editingDate[1], editingDate[0], false);
         bookingRepository.save(booking);
         userInfo.setBooking(booking);
         userInfoRepository.save(userInfo);

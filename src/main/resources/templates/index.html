@@ -25,11 +25,23 @@
                     <input type="text" class="form-control" id="name" name="name" placeholder="Иванов Иван Иванович"
                            pattern="^[А-Яа-яЁё\s]+$" required>
                 </div>
+
+                <div class="mt-3">
+                    <p>Телефон</p>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="1111"
+                           pattern="^[0-9]{,4}+$" required>
+                </div>
+
+                <div class="mt-3">
+                    <p>Почта</p>
+                    <input type="email" class="form-control" id="mail" name="mail" placeholder="test@szemospb.ru"
+                           pattern="^[0-9]{,4}+$" required>
+                </div>
+
                 <div class="mt-3">
                     <p>Номер авто</p>
-                    <input type="text" class="form-control" id="number" name="number" placeholder="х777хх77"
+                    <input type="text" class="form-control" id="carNumber" name="carNumber" placeholder="х777хх77"
                            pattern="/^[А-Яа-яЁё]\d{3}(?<!000)[А-Яа-яЁё]{2}\d{2,3}$/ui" required>
-                    <!--                           pattern="^[А-Яа-яЁё]{1}[0-9]{3}[А-Яа-яЁё]{2}[0-9]{,3}+$" required>-->
                 </div>
 
                 <button type="submit" class="btn btn-primary">Отправить</button>
