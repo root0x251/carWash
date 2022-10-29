@@ -30,4 +30,14 @@ public class UserInfo {
         this.carNumber = carNumber;
     }
 
+//    @Override
+//    public String toString() {
+//        return "UserInfo{" +
+//                "name='" + name + '\'' +
+//                ", carNumber='" + carNumber + '\'' +
+//                ", booking{"  +
+//                    "date='"+ booking.getDate() + '\'' +
+//                    "time='"+ booking.getTime() + '\'' +
+//                '}';
+//    }
 }

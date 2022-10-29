@@ -15,14 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-public class MainController {
+public class UserController {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
     @Autowired
     private BookingRepository bookingRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public String searchAllRegisteredDays(Model model) {
 
         // search all booking
@@ -46,18 +46,6 @@ public class MainController {
             System.out.println(generateDays("dd.MM", 2) + " = " + s);
         }
 
-//        // generate time
-//        List<String> listWithTime = generateTime();
-//        // array with listOfDays
-//        List<String> listOfDays = new ArrayList<>();
-//        listOfDays.add(generateDays("EEE dd.MM", 0));
-//        listOfDays.add(generateDays("EEE dd.MM", 1));
-//        listOfDays.add(generateDays("EEE dd.MM", 2));
-//
-//        // insert variable in html
-//        model.addAttribute("days", listOfDays);
-//        model.addAttribute("time", listWithTime);
-
         // generate time
         List<String> listWithTimeToday = generateTime();
         List<String> listWithTimeTomorrow = generateTime();
@@ -71,7 +59,6 @@ public class MainController {
         String dayToday = generateDays("EEE dd.MM", 0);
         String dayTomorrow = generateDays("EEE dd.MM", 1);
         String dayAfterTomorrow = generateDays("EEE dd.MM", 2);
-
 
         // today
         model.addAttribute("daysToday", dayToday);
@@ -103,7 +90,7 @@ public class MainController {
         return "redirect:/";
     }
 
-    private String generateDays(String pattern, int whatIsDay) {
+    protected String generateDays(String pattern, int whatIsDay) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat(pattern);
         SimpleDateFormat dayOfWeek = new SimpleDateFormat("E", Locale.ENGLISH); // Пн

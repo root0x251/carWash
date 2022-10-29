@@ -23,11 +23,13 @@
                 <div class="mt-3">
                     <p>ФИО</p>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Иванов Иван Иванович"
-                           required>
+                           pattern="^[А-Яа-яЁё\s]+$" required>
                 </div>
                 <div class="mt-3">
                     <p>Номер авто</p>
-                    <input type="text" class="form-control" id="number" name="number" placeholder="х777хх77" required>
+                    <input type="text" class="form-control" id="number" name="number" placeholder="х777хх77"
+                           pattern="/^[А-Яа-яЁё]\d{3}(?<!000)[А-Яа-яЁё]{2}\d{2,3}$/ui" required>
+                    <!--                           pattern="^[А-Яа-яЁё]{1}[0-9]{3}[А-Яа-яЁё]{2}[0-9]{,3}+$" required>-->
                 </div>
 
                 <button type="submit" class="btn btn-primary">Отправить</button>
