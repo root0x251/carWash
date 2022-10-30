@@ -39,7 +39,7 @@
             <td th:text="${user.date}">30.10</td>
             <td th:text="${user.time}">12:20</td>
             <td>
-            <td> <a th:href="@{/admin/{id}(id=${user.bookingId})}" class="btn btn-primary" th:value="${user.bookingId}">done</a>
+            <td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-primary" th:value="${user.id}">done</a>
             </td>
         </tr>
         </tbody>
@@ -67,7 +67,7 @@
             <td th:text="${user.date}">30.10</td>
             <td th:text="${user.time}">12:20</td>
             <td>
-            <td> <a th:href="@{/admin/{id}(id=${user.bookingId})}" class="btn btn-primary" th:value="${user.bookingId}">done</a>
+            <td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-primary" th:value="${user.id}">done</a>
             </td>
         </tr>
         </tbody>
@@ -93,7 +93,7 @@
             <td th:text="${user.carNumber}">у333ууу111</td>
             <td th:text="${user.date}">30.10</td>
             <td th:text="${user.time}">12:20</td>
-            <td> <a th:href="@{/admin/{id}(id=${user.bookingId})}" class="btn btn-primary" th:value="${user.bookingId}">done</a>
+            <td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-primary" th:value="${user.id}">done</a>
         </tr>
         </tbody>
     </table>

@@ -1,8 +1,6 @@
 package com.bortn.carWash.controller;
 
-import com.bortn.carWash.entity.Booking;
 import com.bortn.carWash.entity.UserInfo;
-import com.bortn.carWash.repos.BookingRepository;
 import com.bortn.carWash.repos.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +17,6 @@ public class UserController {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
-    @Autowired
-    private BookingRepository bookingRepository;
 
     private int yesterday;
 
@@ -35,11 +31,10 @@ public class UserController {
         // days (example SUN 26.10)
         List<String> listWithBookingDate = generateDays("dd.MM");
 
-        // this is booking days
-        bookedCurrentDay = bookingRepository.findNotBookingDate(listWithBookingDate.get(0));
-        bookedTomorrow = bookingRepository.findNotBookingDate(listWithBookingDate.get(1));
-        bookedNextDay = bookingRepository.findNotBookingDate(listWithBookingDate.get(2));
-
+        // this is booking days (search in database)
+        bookedCurrentDay = userInfoRepository.findNotBookingDate(listWithBookingDate.get(0));
+        bookedTomorrow = userInfoRepository.findNotBookingDate(listWithBookingDate.get(1));
+        bookedNextDay = userInfoRepository.findNotBookingDate(listWithBookingDate.get(2));
 
         // generate time
         List<String> listWithTimeToday = generateTime();
@@ -65,7 +60,6 @@ public class UserController {
         model.addAttribute("daysNext", listWithDate.get(2));
         model.addAttribute("timeNext", listWithTimeNextDayAfterTomorrow);
 
-
         return "index";
     }
 
@@ -77,11 +71,14 @@ public class UserController {
                            @RequestParam("time") String time) {
 
         String[] editingDate = time.split(" ")[1].split("T");
-        UserInfo userInfo = new UserInfo(name, phone, mail, carNumber);
-        Booking booking = new Booking(editingDate[1], editingDate[0], false);
-        bookingRepository.save(booking);
-        userInfo.setBooking(booking);
-        userInfoRepository.save(userInfo);
+
+
+        // check if entity exist
+        if (!userInfoRepository.isExist(editingDate[0], editingDate[1])) {
+            UserInfo userInfo = new UserInfo(name, phone, mail, carNumber, editingDate[1], editingDate[0], false);
+            userInfoRepository.save(userInfo);
+            return "redirect:/";
+        }
 
         return "redirect:/";
     }
@@ -94,7 +91,6 @@ public class UserController {
         List<String> listWithDate = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             calendar.add(Calendar.DATE, i);
-            System.out.println(dayOfWeek.format(calendar.getTime()));
             if (dayOfWeek.format(calendar.getTime()).equals("Sat")) {
 
             } else if (dayOfWeek.format(calendar.getTime()).equals("Sun")) {

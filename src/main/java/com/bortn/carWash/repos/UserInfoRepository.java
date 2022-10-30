@@ -10,15 +10,22 @@ import java.util.List;
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
-    @Query(value = "SELECT u_name, u_phone, u_mail, car_number, \n" +
-            "public.booking.b_date, public.booking.b_time, public.booking.is_done, public.booking.id\n" +
-            "FROM public.user_info\n" +
-            "JOIN public.booking\n" +
-            "ON booking_id = public.booking.id\n" +
-            "WHERE public.booking.b_date = ?1\n" +
-            "AND public.booking.is_done = 'false'\n" +
-            "ORDER BY public.booking.b_time ASC\n", nativeQuery = true)
-    List<String> findJobForWasher(String date);
+    @Query(value = "SELECT id, car_number, b_date, is_done, u_mail, u_name, u_phone, b_time\n" +
+            "FROM public.full_user\n" +
+            "WHERE b_date = ?1\n" +
+            "AND is_done = 'false'\n" +
+            "ORDER BY b_time ASC", nativeQuery = true)
+    List<UserInfo> findJobForWasher(String date);
+
+    @Query(value = "SELECT b_time FROM public.full_user WHERE b_date = ?1", nativeQuery = true)
+    List<String> findNotBookingDate(String date);
+
+    @Query(value = "SELECT EXISTS(SELECT * from public.full_user " +
+            "WHERE b_date = ?1 AND b_time = ?2)", nativeQuery = true)
+    boolean isExist(String date, String time);
+
+    @Query(value = "SELECT u_name FROM public.full_user WHERE b_date = ?1 AND b_time = ?2", nativeQuery = true)
+    String test(String date, String time);
 
 
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_info")
+@Table(name = "full_user")
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,18 +22,23 @@ public class UserInfo {
     private String mail;
     @Column(name = "car_number")
     private String carNumber;
-
-    @OneToOne
-    @JoinColumn(name = "booking_id")
-    private Booking booking;
+    @Column(name = "b_time")
+    private String time;
+    @Column(name = "b_date")
+    private String date;
+    @Column(name = "is_done")
+    private boolean isDone;
 
     public UserInfo() {
     }
 
-    public UserInfo(String name, String phone, String mail, String carNumber) {
+    public UserInfo(String name, String phone, String mail, String carNumber, String time, String date, boolean isDone) {
         this.name = name;
         this.phone = phone;
         this.mail = mail;
         this.carNumber = carNumber;
+        this.time = time;
+        this.date = date;
+        this.isDone = isDone;
     }
 }
