@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
-    
+
     @Query(value = "SELECT u_name, u_phone, u_mail, car_number, \n" +
             "public.booking.b_date, public.booking.b_time, public.booking.is_done, public.booking.id\n" +
             "FROM public.user_info\n" +
