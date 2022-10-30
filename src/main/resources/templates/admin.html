@@ -39,7 +39,7 @@
             <td th:text="${user.date}">30.10</td>
             <td th:text="${user.time}">12:20</td>
             <td>
-                <button type="submit" th:value="${user.bookingId}">Done</button>
+            <td> <a th:href="@{/admin/{id}(id=${user.bookingId})}" class="btn btn-primary" th:value="${user.bookingId}">done</a>
             </td>
         </tr>
         </tbody>
@@ -67,7 +67,7 @@
             <td th:text="${user.date}">30.10</td>
             <td th:text="${user.time}">12:20</td>
             <td>
-                <button type="submit" th:value="${user.bookingId}">Done</button>
+            <td> <a th:href="@{/admin/{id}(id=${user.bookingId})}" class="btn btn-primary" th:value="${user.bookingId}">done</a>
             </td>
         </tr>
         </tbody>
