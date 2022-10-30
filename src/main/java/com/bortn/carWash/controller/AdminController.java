@@ -24,30 +24,31 @@ public class AdminController extends UserController {
 
     @GetMapping()
     public String getAllOrders(Model model) {
+        // days (example SUN 26.10)
+        List<String> listWithDate = generateDays("dd.MM");
+
         // current date
-        model.addAttribute("today", mappingUserToDTO(0));
+        model.addAttribute("today", mappingUserToDTO(listWithDate.get(0)));
         // tomorrow
-        model.addAttribute("tomorrow", mappingUserToDTO(1));
+        model.addAttribute("tomorrow", mappingUserToDTO(listWithDate.get(1)));
         // day after tomorrow
-        model.addAttribute("dayAfterTomorrow", mappingUserToDTO(2));
+        model.addAttribute("dayAfterTomorrow", mappingUserToDTO(listWithDate.get(2)));
         return "admin";
     }
 
     @GetMapping("{id}")
-    public String workIsDone(@PathVariable(value = "id")  String bookingID) {
-
+    public String workIsDone(@PathVariable(value = "id") String bookingID) {
         Optional<Booking> booking = bookingRepository.findById(Long.valueOf(bookingID));
         Booking booking1 = booking.get();
-        // crush the variables of the object found
         booking1.setDone(true);
         bookingRepository.save(booking1);
 
         return "redirect:/admin";
     }
 
-    private List<UserFullInfoDto> mappingUserToDTO(int whatIsDay) {
+    private List<UserFullInfoDto> mappingUserToDTO(String whatIsDay) {
         List<UserFullInfoDto> userFullInfoDtoList = new ArrayList<>();
-        for (String s : userInfoRepository.findJobForWasher(generateDays("dd.MM", whatIsDay))) {
+        for (String s : userInfoRepository.findJobForWasher(whatIsDay)) {
             String[] user = s.split(",");
             userFullInfoDtoList.add(new UserFullInfoDto(user[0], user[1], user[2], user[3], user[4], user[5], user[6], user[7]));
         }
