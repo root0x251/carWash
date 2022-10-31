@@ -15,6 +15,11 @@
   border: solid 2px green;
 }
 
+.disabled {
+    background-color: red;
+    color: #fff;
+}
+
 .row {
     margin-bottom: 1rem;
 }

@@ -52,27 +52,38 @@
                 <p class="mt-5">Свободная дата и время</p>
                 <div class="row">
                     <!-- this day -->
+<!--                    <div class="col-4" th:each="day : ${daysToday}">-->
+<!--                        <div th:each="time : ${timeToday}">-->
+<!--                            <input type="radio" th:id="${day}+${time.key}" name="time" th:value="${day}+'T'+${time.key}"-->
+<!--                                   required>-->
+<!--                            <label th:for="${day}+${time.key}" th:text="${day} + ' в ' + ${time.key}" th:classappend="${time.value}">пт 31.10 10:00</label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <!--                    th:checked="${time.value == 'not'}"-->
+                    <!--                    th:disabled="${time.value}"-->
+
                     <div class="col-4" th:each="day : ${daysToday}">
                         <div th:each="time : ${timeToday}">
-                            <input type="radio" th:id="${day}+${time}" name="time" th:value="${day}+'T'+${time}"
-                                   required>
-                            <label th:for="${day}+${time}" th:text="${day} + ' в ' + ${time}">пт 31.10 10:00</label>
+                            <input type="radio" th:id="${day}+${time.key}" name="time" th:value="${day}+'T'+${time.key}"
+                                   required th:disabled="${time.value == 'disabled'}">
+                            <label th:for="${day}+${time.key}" th:text="${day} + ' в ' + ${time.key}" th:classappend="${time.value}">пт 31.10 10:00</label>
                         </div>
                     </div>
 
                     <div class="col-4" th:each="day : ${daysTomorrow}">
                         <div th:each="time : ${timeTomorrow}">
-                            <input type="radio" th:id="${day}+${time}" name="time" th:value="${day}+'T'+${time}"
-                                   required>
-                            <label th:for="${day}+${time}" th:text="${day} + ' в ' + ${time}">пт 31.10 10:00</label>
+                            <input type="radio" th:id="${day}+${time.key}" name="time" th:value="${day}+'T'+${time.key}"
+                                   required th:disabled="${time.value == 'disabled'}">
+                            <label th:for="${day}+${time.key}" th:text="${day} + ' в ' + ${time.key}" th:classappend="${time.value}">пт 31.10 10:00</label>
                         </div>
                     </div>
 
                     <div class="col-4" th:each="day : ${daysNext}">
                         <div th:each="time : ${timeNext}">
-                            <input type="radio" th:id="${day}+${time}" name="time" th:value="${day}+'T'+${time}"
-                                   required>
-                            <label th:for="${day}+${time}" th:text="${day} + ' в ' + ${time}">пт 31.10 10:00</label>
+                            <input type="radio" th:id="${day}+${time.key}" name="time" th:value="${day}+'T'+${time.key}"
+                                   required th:disabled="${time.value == 'disabled'}">
+                            <label th:for="${day}+${time.key}" th:text="${day} + ' в ' + ${time.key}" th:classappend="${time.value}">пт 31.10 10:00</label>
                         </div>
                     </div>
                 </div>

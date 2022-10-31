@@ -29,7 +29,7 @@ public class UserController {
         List<String> bookedNextDay;       // +2 day
 
         // days (example SUN 26.10)
-        List<String> listWithBookingDate = generateDays("dd.MM");
+        List<String> listWithBookingDate = generateTime("dd.MM", 20);
 
         // this is booking days (search in database)
         bookedCurrentDay = userInfoRepository.findNotBookingDate(listWithBookingDate.get(0));
@@ -41,24 +41,25 @@ public class UserController {
         List<String> listWithTimeTomorrow = generateTime();
         List<String> listWithTimeNextDayAfterTomorrow = generateTime();
 
-        listWithTimeToday.removeAll(new HashSet<>(bookedCurrentDay));
-        listWithTimeTomorrow.removeAll(new HashSet<>(bookedTomorrow));
-        listWithTimeNextDayAfterTomorrow.removeAll(new HashSet<>(bookedNextDay));
+        // clarifying schedule
+        Map<String, String> todayShedule = clarifyingSchedule(listWithTimeToday, bookedCurrentDay);
+        Map<String, String> tomorrowShedule = clarifyingSchedule(listWithTimeTomorrow, bookedTomorrow);
+        Map<String, String> dayAfterTomorrowShedule = clarifyingSchedule(listWithTimeNextDayAfterTomorrow, bookedNextDay);
 
         // days (example SUN 26.10)
-        List<String> listWithDate = generateDays("EEE dd.MM");
+        List<String> listWithDate = generateTime("EEE dd.MM", 20);
 
         // today
         model.addAttribute("daysToday", listWithDate.get(0));
-        model.addAttribute("timeToday", listWithTimeToday);
+        model.addAttribute("timeToday", todayShedule);
 
         // tomorrow
         model.addAttribute("daysTomorrow", listWithDate.get(1));
-        model.addAttribute("timeTomorrow", listWithTimeTomorrow);
+        model.addAttribute("timeTomorrow", tomorrowShedule);
 
         // next day after tomorrow
         model.addAttribute("daysNext", listWithDate.get(2));
-        model.addAttribute("timeNext", listWithTimeNextDayAfterTomorrow);
+        model.addAttribute("timeNext", dayAfterTomorrowShedule);
 
         return "index";
     }
@@ -71,8 +72,6 @@ public class UserController {
                            @RequestParam("time") String time) {
 
         String[] editingDate = time.split(" ")[1].split("T");
-
-
         // check if entity exist
         if (!userInfoRepository.isExist(editingDate[0], editingDate[1])) {
             UserInfo userInfo = new UserInfo(name, phone, mail, carNumber, editingDate[1], editingDate[0], false);
@@ -83,13 +82,14 @@ public class UserController {
         return "redirect:/";
     }
 
-    protected List<String> generateDays(String pattern) {
+    // generate days
+    protected List<String> generateTime(String pattern, int count) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat(pattern);
         SimpleDateFormat dayOfWeek = new SimpleDateFormat("E", Locale.ENGLISH); // Пн
 
         List<String> listWithDate = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < count; i++) {
             calendar.add(Calendar.DATE, i);
             if (dayOfWeek.format(calendar.getTime()).equals("Sat")) {
 
@@ -104,6 +104,7 @@ public class UserController {
         return listWithDate;
     }
 
+    // generate time
     private List<String> generateTime() {
         List<String> list = new ArrayList<>();
         list.add("09:00");
@@ -111,6 +112,32 @@ public class UserController {
             list.add(i + ":00");
         }
         return list;
+    }
+
+    // hz hz hz
+    //TODO сделать проверку на прощедщее время
+    private Map<String, String> clarifyingSchedule(List<String> mainList, List<String> bookingTimeList) {
+        Map<String, String> dictionary = new TreeMap<>();
+        if (bookingTimeList.size() > 0) {
+            String value;
+            for (String item : mainList) {
+                value = item;
+                for (String s : bookingTimeList) {
+                    if (value.equals(s)) {
+                        dictionary.put(value, "disabled");
+                        break;
+                    } else {
+                        dictionary.put(value, "not");
+                    }
+                }
+            }
+        } else {
+            for (String s : mainList) {
+                dictionary.put(s, "not");
+            }
+        }
+
+        return dictionary;
     }
 
 

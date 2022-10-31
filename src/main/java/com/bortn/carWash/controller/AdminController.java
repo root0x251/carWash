@@ -19,7 +19,7 @@ public class AdminController extends UserController {
     @GetMapping()
     public String getAllOrders(Model model) {
         // days (example SUN 26.10)
-        List<String> listWithDate = generateDays("dd.MM");
+        List<String> listWithDate = generateTime("dd.MM", 20);
 
         // current date
         model.addAttribute("today", userInfoRepository.findJobForWasher(listWithDate.get(0)));

@@ -24,8 +24,4 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
             "WHERE b_date = ?1 AND b_time = ?2)", nativeQuery = true)
     boolean isExist(String date, String time);
 
-    @Query(value = "SELECT u_name FROM public.full_user WHERE b_date = ?1 AND b_time = ?2", nativeQuery = true)
-    String test(String date, String time);
-
-
 }
