@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+          rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ФИО</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Номер авто</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Время</th>
+            <th scope="col">Готово?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${today}">
+            <td th:text="${user.name}">Иван</td>
+            <td th:text="${user.phone}">222</td>
+            <td th:text="${user.mail}">sds@mail.rt</td>
+            <td th:text="${user.carNumber}">у333ууу111</td>
+            <td th:text="${user.date}">30.10</td>
+            <td th:text="${user.time}">12:20</td>
+            <td>
+            <td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-primary" th:value="${user.id}">done</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ФИО</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Номер авто</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Время</th>
+            <th scope="col">Готово?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${tomorrow}">
+            <td th:text="${user.name}">Иван</td>
+            <td th:text="${user.phone}">222</td>
+            <td th:text="${user.mail}">sds@mail.rt</td>
+            <td th:text="${user.carNumber}">у333ууу111</td>
+            <td th:text="${user.date}">30.10</td>
+            <td th:text="${user.time}">12:20</td>
+            <td>
+            <td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-primary" th:value="${user.id}">done</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ФИО</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Номер авто</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Время</th>
+            <th scope="col">Готово?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${dayAfterTomorrow}">
+            <td th:text="${user.name}">Иван</td>
+            <td th:text="${user.phone}">222</td>
+            <td th:text="${user.mail}">sds@mail.rt</td>
+            <td th:text="${user.carNumber}">у333ууу111</td>
+            <td th:text="${user.date}">30.10</td>
+            <td th:text="${user.time}">12:20</td>
+            <td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-primary" th:value="${user.id}">done</a>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+</div>
+</body>
+</html>
